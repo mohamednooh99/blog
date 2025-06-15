@@ -44,7 +44,15 @@ function Login() {
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ mt: 8, textAlign: "center" }}>
+      <Box
+        sx={{
+          mt: 8,
+          textAlign: "center",
+          minHeight: "80vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
