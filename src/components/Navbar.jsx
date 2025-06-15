@@ -282,7 +282,7 @@ export default function PrimarySearchAppBar({ search, setSearch }) {
               <>
                 <Button
                   color="inherit"
-                  component={Link}
+                  component={RouterLink}
                   to="/login"
                   sx={{ color: "#fff", mr: 2 }}
                 >
@@ -290,7 +290,7 @@ export default function PrimarySearchAppBar({ search, setSearch }) {
                 </Button>
                 <Button
                   color="inherit"
-                  component={Link}
+                  component={RouterLink}
                   to="/signup"
                   sx={{ color: "#fff" }}
                 >
