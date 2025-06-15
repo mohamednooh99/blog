@@ -172,7 +172,7 @@ export default function PrimarySearchAppBar({ search, setSearch }) {
             >
               <Box
                 component="img"
-                src="/blog/logo.png"
+                src="/logo.png"
                 alt="Logo"
                 sx={{ height: { sc: 25, sm: 30 }, width: { xs: 25, sm: 30 } }}
               />
