@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000/";
+// const URL = "http://localhost:3000/";
+const URL = "https://dune-scalloped-age.glitch.me/";
 
 export const fetchLogin = async (values) => {
   return axios.post(`${URL}api/auth/login`, values);

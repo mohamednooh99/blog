@@ -1,9 +1,12 @@
 {
+  "homepage": "https://mohamednooh99.github.io/blog",
   "name": "blog",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -52,6 +55,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mohamednooh99/blog/issues"
-  },
-  "homepage": "https://github.com/mohamednooh99/blog#readme"
+  }
 }
