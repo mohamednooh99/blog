@@ -2,6 +2,8 @@
 
 **Live Demo**: [https://blog-gamma-three-82.vercel.app/](https://blog-gamma-three-82.vercel.app/)
 
+**Backend** : [https://github.com/mohamednooh99/blog_backend/tree/main](https://github.com/mohamednooh99/blog_backend/tree/main)
+
 ## 🧭 Overview
 
 Introducing **Blog App**, a modern, clean, and responsive blogging platform built with React. Designed for simplicity and performance, this app allows users to explore articles in an elegant layout with smooth navigation and enhanced user experience. Whether you're writing personal thoughts, tutorials, or tech articles, this blog provides the perfect foundation.
