@@ -27,12 +27,15 @@ import { Formik, Form, Field } from "formik";
 import { formatDistanceToNow } from "date-fns";
 
 function Post({ posts = [], loading = false }) {
-  const { user } = useUser();
+  const { user, users } = useUser();
   const { deleteAndUpdatePosts, fetchPosts } = usePosts();
   const [menuState, setMenuState] = useState({ anchorEl: null, postId: null });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editPost, setEditPost] = useState(null);
+
+  console.log(posts);
+  console.log(users);
 
   // handellers
   const handleMenuOpen = (event, postId) => {
@@ -82,79 +85,86 @@ function Post({ posts = [], loading = false }) {
       setMenuState({ anchorEl: null, postId: null });
     }
   };
+  // const author = users.find((u) => u.id === post.user);
 
   if (loading) return <div>Loading...</div>;
   return (
     <>
-      {posts.map((post) => (
-        <Card key={post._id} sx={{ maxWidth: 400, marginBottom: 2, p: 2 }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe">
-                {post.user === user?.id ? user?.name[0].toUpperCase() : "R"}
-              </Avatar>
-            }
-            action={
-              <>
-                {user && post.user === user.id && (
-                  <>
-                    <IconButton
-                      aria-label="settings"
-                      onClick={(e) => handleMenuOpen(e, post._id)}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      anchorEl={menuState.anchorEl}
-                      open={Boolean(menuState.anchorEl)}
-                      onClose={handleMenuClose}
-                    >
-                      <MenuItem onClick={handleEdit}>
-                        <BorderColorOutlinedIcon />
-                        <Box sx={{ marginLeft: 2 }}>edit</Box>
-                      </MenuItem>
-                      <MenuItem onClick={handleRequestDelete}>
-                        <DeleteOutlineIcon />
-                        <Box sx={{ marginLeft: 2 }}>remove</Box>
-                      </MenuItem>
-                    </Menu>
-                  </>
-                )}
-              </>
-            }
-            title={(post.user === user?.id && user.name) || "No Title"}
-            subheader={
-              post.createdAt
-                ? formatDistanceToNow(new Date(post.createdAt), {
-                    addSuffix: true,
-                  })
-                : "No Date"
-            }
-          />
-          {post.Image && (
-            <CardMedia
-              component="img"
-              height="194"
-              image={post.Image}
-              alt={post.title || "Post image"}
+      {posts.map((post) => {
+        const author = users.find((u) => u._id === post.user);
+        return (
+          <Card key={post._id} sx={{ maxWidth: 400, marginBottom: 2, p: 2 }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe">
+                  {author?.name ? author.name[0].toUpperCase() : "R"}
+                </Avatar>
+              }
+              action={
+                <>
+                  {user && post.user === user.id && (
+                    <>
+                      <IconButton
+                        aria-label="settings"
+                        onClick={(e) => handleMenuOpen(e, post._id)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                      <Menu
+                        anchorEl={menuState.anchorEl}
+                        open={Boolean(menuState.anchorEl)}
+                        onClose={handleMenuClose}
+                      >
+                        <MenuItem onClick={handleEdit}>
+                          <BorderColorOutlinedIcon />
+                          <Box sx={{ marginLeft: 2 }}>edit</Box>
+                        </MenuItem>
+                        <MenuItem onClick={handleRequestDelete}>
+                          <DeleteOutlineIcon />
+                          <Box sx={{ marginLeft: 2 }}>remove</Box>
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  )}
+                </>
+              }
+              title={author.name}
+              subheader={
+                post.createdAt
+                  ? formatDistanceToNow(new Date(post.createdAt), {
+                      addSuffix: true,
+                    })
+                  : "No Date"
+              }
             />
-          )}
-          <CardContent>
-            <Chip
-              label={`${post.category}`}
-              color="primary"
-              variant="outlined"
-            />
-            <Box component="h5" sx={{ mt: 2 }}>
-              {" "}
-              {post.title}{" "}
-            </Box>
-            <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-              {post.description || "No Content"}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
+            {post.Image && (
+              <CardMedia
+                component="img"
+                height="194"
+                image={post.Image}
+                alt={post.title || "Post image"}
+              />
+            )}
+            <CardContent>
+              <Chip
+                label={`${post.category}`}
+                color="primary"
+                variant="outlined"
+              />
+              <Box component="h5" sx={{ mt: 2 }}>
+                {" "}
+                {post.title}{" "}
+              </Box>
+              <Typography
+                variant="body2"
+                sx={{ color: "text.secondary", mt: 1 }}
+              >
+                {post.description || "No Content"}
+              </Typography>
+            </CardContent>
+          </Card>
+        );
+      })}
       {/* modal confirm delete */}
 
       <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>

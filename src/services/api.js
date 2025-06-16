@@ -11,6 +11,10 @@ export const fetchSignup = async (values) => {
   return axios.post(`${URL}api/auth/signup`, values);
 };
 
+export const getUsers = async () => {
+  return axios.get(`${URL}users`);
+};
+
 export const createPost = async (formData) => {
   return axios.post(`${URL}posts`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
