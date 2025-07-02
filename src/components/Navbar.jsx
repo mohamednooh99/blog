@@ -195,22 +195,7 @@ export default function PrimarySearchAppBar({ search, setSearch }) {
               </Link>
               <Link
                 component={RouterLink}
-                to="/"
-                color="inherit"
-                underline="hover"
-                sx={{
-                  mx: 1,
-                  fontWeight: 500,
-                  fontSize: 16,
-                  "&:hover": { color: "darkblue" },
-                  transition: "color 0.2s",
-                }}
-              >
-                About
-              </Link>
-              <Link
-                component={RouterLink}
-                to="/"
+                to="/contact"
                 color="inherit"
                 underline="hover"
                 sx={{

@@ -93,13 +93,15 @@ function Signup() {
                 </Alert>
               )}
               <Button
+                loading={isSubmitting}
                 type="submit"
                 variant="contained"
                 fullWidth
                 sx={{ mt: 2 }}
                 disabled={isSubmitting}
+                loadingPosition="end"
               >
-                Register
+                {isSubmitting ? "" : "Register"}
               </Button>
               <Typography sx={{ mt: 2 }}>
                 have an account ? <Link to="/login">Login</Link>

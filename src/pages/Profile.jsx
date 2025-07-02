@@ -16,7 +16,7 @@ function Profile() {
 
   if (!user)
     return (
-      <Box sx={{ mt: 5 }}>
+      <Box sx={{ mt: 5, textAlign: "center" }}>
         <Container>plz login first!</Container>
       </Box>
     );

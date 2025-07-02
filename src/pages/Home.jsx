@@ -7,6 +7,7 @@ import {
   Grid,
   Modal,
   Pagination,
+  Skeleton,
   Stack,
 } from "@mui/material";
 import { usePosts } from "../context/PostsContext";
@@ -39,10 +40,14 @@ function Home({ search }) {
     return matchCategory && matchSearch;
   });
 
+  filteredPosts = filteredPosts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   // pagination
   let numOfPosts = filteredPosts.length;
 
-  const countPostsInPage = 5;
+  const countPostsInPage = 8;
 
   const numOfPages = Math.ceil(numOfPosts / countPostsInPage);
   // const pages = getArrayOfPages(numOfPages);
@@ -52,6 +57,7 @@ function Home({ search }) {
 
   filteredPosts = filteredPosts.slice(start, end);
 
+  // useEffect
   useEffect(() => {
     if (currentPage > numOfPages) {
       setCurrentPage(numOfPages > 0 ? numOfPages : 1);
@@ -70,13 +76,6 @@ function Home({ search }) {
       >
         <Container maxWidth="md">
           <Grid container spacing={2} justifyContent="center">
-            {/* <Grid
-              item
-              xs={12}
-              sm={3}
-              md={3}
-              sx={{ order: { xs: 1, sm: 1, md: 1 }, sm: { display: "none" } }}
-            ></Grid> */}
             <Grid
               size={{ xs: 12, sm: 8, md: 5 }}
               sx={{ order: { xs: 2, sm: 1 } }}
@@ -94,7 +93,10 @@ function Home({ search }) {
                     <Pagination
                       count={numOfPages}
                       page={currentPage}
-                      onChange={(event, value) => setCurrentPage(value)}
+                      onChange={(event, value) => {
+                        setCurrentPage(value);
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
                       variant="outlined"
                       color="primary"
                     />
@@ -118,23 +120,38 @@ function Home({ search }) {
                   sm: { borderRadius: 20 },
                 }}
               >
-                {["All", ...categories].map((category) => (
-                  <Chip
-                    key={category}
-                    label={`${category}`}
-                    color="primary"
-                    variant={
-                      selectedCategory === category ||
-                      (category === "All" && selectedCategory === "")
-                        ? "filled"
-                        : "outlined"
-                    }
-                    sx={{ m: 1, cursor: "pointer" }}
-                    onClick={() =>
-                      setSelectedCategory(category === "All" ? "" : category)
-                    }
-                  />
-                ))}
+                {loading ? (
+                  // Skeletons for categories
+                  <>
+                    {[...Array(5)].map((_, i) => (
+                      <Skeleton
+                        key={i}
+                        variant="rounded"
+                        width={120}
+                        height={32}
+                        sx={{ m: 1, display: "inline-block", borderRadius: 10 }}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  ["All", ...categories].map((category) => (
+                    <Chip
+                      key={category}
+                      label={`${category}`}
+                      color="primary"
+                      variant={
+                        selectedCategory === category ||
+                        (category === "All" && selectedCategory === "")
+                          ? "filled"
+                          : "outlined"
+                      }
+                      sx={{ m: 1, cursor: "pointer" }}
+                      onClick={() =>
+                        setSelectedCategory(category === "All" ? "" : category)
+                      }
+                    />
+                  ))
+                )}
               </Box>
             </Grid>
           </Grid>

@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
 import { useState } from "react";
+import ContactSection from "./pages/Contact";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -31,6 +32,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/contact" element={<ContactSection />} />
           </Routes>
           <Footer />
         </PostsProvider>

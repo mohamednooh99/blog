@@ -25,6 +25,7 @@ import { usePosts } from "../context/PostsContext";
 import { updatePost } from "../services/api";
 import { Formik, Form, Field } from "formik";
 import { formatDistanceToNow } from "date-fns";
+import SaveIcon from "@mui/icons-material/Save";
 
 function Post({ posts = [], loading = false }) {
   const { user, users } = useUser();
@@ -33,9 +34,6 @@ function Post({ posts = [], loading = false }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editPost, setEditPost] = useState(null);
-
-  console.log(posts);
-  console.log(users);
 
   // handellers
   const handleMenuOpen = (event, postId) => {
@@ -54,7 +52,6 @@ function Post({ posts = [], loading = false }) {
 
   const handleEdit = () => {
     const post = posts.find((p) => p._id === menuState.postId);
-    console.log(post);
     setEditPost(post);
     setEditOpen(true);
     handleMenuClose();
@@ -85,13 +82,12 @@ function Post({ posts = [], loading = false }) {
       setMenuState({ anchorEl: null, postId: null });
     }
   };
-  // const author = users.find((u) => u.id === post.user);
 
   if (loading) return <div>Loading...</div>;
   return (
     <>
       {posts.map((post) => {
-        const author = users.find((u) => u._id === post.user);
+        const author = users?.find((u) => u._id === post.user);
         return (
           <Card key={post._id} sx={{ maxWidth: 400, marginBottom: 2, p: 2 }}>
             <CardHeader
@@ -128,7 +124,7 @@ function Post({ posts = [], loading = false }) {
                   )}
                 </>
               }
-              title={author.name}
+              title={author?.name}
               subheader={
                 post.createdAt
                   ? formatDistanceToNow(new Date(post.createdAt), {
@@ -256,12 +252,15 @@ function Post({ posts = [], loading = false }) {
                     margin="normal"
                   />
                   <Button
+                    loading={isSubmitting}
                     type="submit"
                     variant="contained"
                     fullWidth
                     disabled={isSubmitting}
+                    loadingPosition="end"
+                    startIcon={<SaveIcon />}
                   >
-                    Update
+                    {isSubmitting ? "Saving..." : "Save"}
                   </Button>
                 </Form>
               )}

@@ -20,21 +20,6 @@ const PostSchema = Yup.object().shape({
   category: Yup.string().required("category required "),
 });
 
-// News
-// Sports
-// Tech
-// Art
-// Education
-// Health
-// Business
-// Travel
-// Food
-// Fashion
-// Science
-// Movies
-// Music
-// Gaming
-
 function CreatePost({ onSuccess }) {
   const { user } = useUser();
   const { fetchPosts } = usePosts();
@@ -142,13 +127,15 @@ function CreatePost({ onSuccess }) {
                 </Alert>
               )}
               <Button
+                loading={isSubmitting}
                 type="submit"
                 variant="contained"
                 fullWidth
                 sx={{ mt: 2 }}
                 disabled={isSubmitting}
+                loadingPosition="end"
               >
-                Publish
+                {isSubmitting ? "Publish..." : "Publish"}
               </Button>
             </Form>
           )}
